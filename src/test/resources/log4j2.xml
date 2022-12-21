@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Cofiguration status="warn" name="NUMBERS_log4j2_XMLConfig">
+
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <Root level="info" additivity="false">
+            <AppenderRef ref="console" level="info"/>
+        </Root>
+    </Loggers>
+
+</Cofiguration>
