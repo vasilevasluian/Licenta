@@ -4,8 +4,7 @@ import com.sauce.demo.entity.Page;
 import com.sauce.demo.entity.Roles;
 import com.sauce.demo.gui.helpers.BrowserHelper;
 import com.sauce.demo.gui.pages.Login;
-import com.sauce.demo.gui.pages.LoginPage;
-import com.sauce.demo.gui.pages.MainDashboardPage;
+import com.sauce.demo.gui.pages.blocks.Header;
 import com.sauce.demo.utils.AssertUtils;
 import com.thoughtworks.gauge.Step;
 import lombok.extern.log4j.Log4j2;
@@ -17,14 +16,14 @@ import org.springframework.stereotype.Component;
 @Log4j2
 public class LoginSteps {
 
-    @Autowired
-    LoginPage loginPage;
+
 
     @Autowired
     Login login;
 
     @Autowired
-    MainDashboardPage mainDashboardPage;
+    Header header;
+
 
     @Step("Open login page")
     public void openLoginPage() {
@@ -34,86 +33,88 @@ public class LoginSteps {
     @Step("Verify if login page is integral")
     public void checkLoginPage() {
         SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(loginPage.getLoginButton().isPresent())
+            softly.assertThat(login.getLoginButton().isPresent())
                     .describedAs("Login Button is displayed")
                     .isTrue();
-
-            softly.assertThat(loginPage.getPasswordField().isPresent())
+            softly.assertThat(login.getUsernameField().isPresent())
+                    .describedAs("User name field is displayed")
+                    .isTrue();
+            softly.assertThat(login.getPasswordField().isPresent())
                     .describedAs("Password field is displayed")
                     .isTrue();
-
-            softly.assertThat(loginPage.getUsernameField().isPresent())
-                    .describedAs("Username field is displayed")
+            softly.assertThat(login.getLoginLogo().isPresent())
+                    .describedAs("Login logo is displayed")
                     .isTrue();
-
-            softly.assertThat(loginPage.getForgotPasswordButton().isPresent())
-                    .describedAs("Forgot password field is displayed")
+            softly.assertThat(login.getLoginCredentials().isPresent())
+                    .describedAs("Login credentials is displayed")
                     .isTrue();
-
-            softly.assertThat(loginPage.getSignUpButton().isPresent())
-                    .describedAs("Sign Up button is displayed")
+            softly.assertThat(login.getLoginPassword().isPresent())
+                    .describedAs("Login password is displayed")
                     .isTrue();
         });
     }
 
-    @Step("Go to <Forgot Password> page")
-    public void goToPage(Page page) throws InterruptedException {
-        Thread.sleep(120);
+    public void checkHeader(){
+        SoftAssertions.assertSoftly(softly -> {
+//                    softly.assertThat(header.getAppLogo().isPresent())
+//                            .describedAs("App logo is displayed")
+//                            .isTrue();
 
-        switch (page) {
-            case FORGOT_PASSWORD: {
-                loginPage.getForgotPasswordButton().click();
-                break;
-            }
-            case SIGN_UP: {
-                loginPage.getSignUpButton().click();
-                break;
-            }
-            case MY_PROFILE: {
-                mainDashboardPage.getMyProfileButton().click();
-            }
-            case USER_ADMIN: {
-                mainDashboardPage.getSettingsButton().click();
-                mainDashboardPage.getUserAdminButton().click();
-            }
+            softly.assertThat(header.getShoppingCart().isPresent())
+                    .describedAs("Shopping cart is displayed")
+                    .isTrue();
 
-        }
+            softly.assertThat(header.getMenuButton().isPresent())
+                    .describedAs("Menu button is displayed")
+                    .isTrue();
+        });
     }
+
+//    @Step("Verify if login page is integral")
+//    public void checkLoginPage() {
+//        SoftAssertions.assertSoftly(softly -> {
+//            softly.assertThat(loginPage.getLoginButton().isPresent())
+//                    .describedAs("Login Button is displayed")
+//                    .isTrue();
+//
+//            softly.assertThat(loginPage.getPasswordField().isPresent())
+//                    .describedAs("Password field is displayed")
+//                    .isTrue();
+//
+//            softly.assertThat(loginPage.getUsernameField().isPresent())
+//                    .describedAs("Username field is displayed")
+//                    .isTrue();
+//
+//            softly.assertThat(loginPage.getForgotPasswordButton().isPresent())
+//                    .describedAs("Forgot password field is displayed")
+//                    .isTrue();
+//
+//            softly.assertThat(loginPage.getSignUpButton().isPresent())
+//                    .describedAs("Sign Up button is displayed")
+//                    .isTrue();
+//        });
+//    }
+
 
     @Step("Login as <SIMPLE_USER>")
     public void loginToApp(Roles roles) {
         switch (roles) {
             case SIMPLE_USER: {
-                BrowserHelper.navigate(System.getenv("url"));
-                loginPage.getUsernameField().sendKeys(System.getenv("simpleUserUsername"));
-                loginPage.getPasswordField().sendKeys(System.getenv("simpleUserPassword"));
-                loginPage.getLoginButton().click();
+//                BrowserHelper.navigate(System.getenv("url"));
+                login.getUsernameField().sendKeys(System.getenv("simpleUserUsername"));
+                login.getPasswordField().sendKeys(System.getenv("simpleUserPassword"));
+                login.getLoginButton().click();
                 break;
             }
-            case ADMIN_USER: {
+            case PROBLEM_USER: {
                 BrowserHelper.navigate(System.getenv("url"));
+                login.getUsernameField().sendKeys(System.getenv("problemUserUsername"));
+                login.getPasswordField().sendKeys(System.getenv("problemUserPassword"));
+                login.getLoginButton().click();
                 break;
             }
-
         }
 
-    }
-
-    @Step("Verify if user is logout")
-    public void checkIfUserIsLogout() {
-        AssertUtils.assertThat("User is not logout", loginPage.getLoginButton().isPresent());
-    }
-
-    @Step("Fill the password field with invalid password")
-    public void fillWrongPassword() {
-        loginPage.getUsernameField().sendKeys(System.getenv("simpleUserUsername"));
-        loginPage.getPasswordField().sendKeys(System.getenv("simpleUserUsername"));
-        loginPage.getLoginButton().click();
-    }
-
-    @Step("Check if error message appears")
-    public void checkErrorMessage() {
-        AssertUtils.assertThat("Error message didn't appear", loginPage.getErrorMessageForPassword().isPresent());
     }
 
     @Step("Login to application")
@@ -122,5 +123,6 @@ public class LoginSteps {
         login.getPasswordField().sendKeys(System.getenv("simpleUserPassword"));
         login.getLoginButton().click();
         Thread.sleep(2000);
+        login.getHeader().getAppLogo().isPresent();
     }
 }

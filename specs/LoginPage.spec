@@ -6,7 +6,9 @@ Tags: smoke
 * Verify if login page is integral
 
 
-## test
+## Verifi if user can login as simple user
 Tags: smoke
 * Open login page
-* Login to application
+* Login as "SIMPLE_USER"
+
+//* Login to application
