@@ -20,4 +20,6 @@ public class Login extends BasePage {
     private PageElement loginCredentials= PageElement.locate(LocatorType.CSS_SELECTOR, "#login_credentials");
     private PageElement loginPassword= PageElement.locate(LocatorType.CSS_SELECTOR, ".login_password");
 
+    private PageElement errorContainer = PageElement.locate(LocatorType.CSS_SELECTOR, "[data-test='error']");
+
 }

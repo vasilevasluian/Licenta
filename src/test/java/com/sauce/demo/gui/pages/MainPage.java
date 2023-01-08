@@ -1,6 +1,7 @@
 package com.sauce.demo.gui.pages;
 
 import com.sauce.demo.common.LocatorType;
+import com.sauce.demo.gui.BasePage;
 import com.sauce.demo.gui.components.PageElement;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @Component
 @Scope("prototype")
-public class MainPage {
+public class MainPage extends BasePage {
 //    private PageElement appLogo = PageElement.locate(LocatorType.CSS_SELECTOR, ".app_logo");
 //    private PageElement shoppingCart = PageElement.locate(LocatorType.CSS_SELECTOR, "#shopping_cart_container");
 //    private PageElement menuButton = PageElement.locate(LocatorType.CSS_SELECTOR, "#menu_button_container");
