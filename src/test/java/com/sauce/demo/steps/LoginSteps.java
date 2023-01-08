@@ -4,11 +4,13 @@ import com.sauce.demo.entity.Page;
 import com.sauce.demo.entity.Roles;
 import com.sauce.demo.gui.helpers.BrowserHelper;
 import com.sauce.demo.gui.pages.Login;
+import com.sauce.demo.gui.pages.MainPage;
 import com.sauce.demo.gui.pages.blocks.Header;
 import com.sauce.demo.utils.AssertUtils;
 import com.thoughtworks.gauge.Step;
 import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.SoftAssertions;
+import org.kohsuke.rngom.digested.Main;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,12 +19,14 @@ import org.springframework.stereotype.Component;
 public class LoginSteps {
 
 
-
     @Autowired
     Login login;
 
     @Autowired
     Header header;
+
+    @Autowired
+    MainPage mainPage;
 
 
     @Step("Open login page")
@@ -54,7 +58,7 @@ public class LoginSteps {
         });
     }
 
-    public void checkHeader(){
+    public void checkHeader() {
         SoftAssertions.assertSoftly(softly -> {
 //                    softly.assertThat(header.getAppLogo().isPresent())
 //                            .describedAs("App logo is displayed")
@@ -107,9 +111,33 @@ public class LoginSteps {
                 break;
             }
             case PROBLEM_USER: {
-                BrowserHelper.navigate(System.getenv("url"));
+//                BrowserHelper.navigate(System.getenv("url"));
                 login.getUsernameField().sendKeys(System.getenv("problemUserUsername"));
                 login.getPasswordField().sendKeys(System.getenv("problemUserPassword"));
+                login.getLoginButton().click();
+                break;
+            }
+            case PROBLEM_GLITCH_USER: {
+                login.getUsernameField().sendKeys(System.getenv("performanceGlitchUsername"));
+                login.getPasswordField().sendKeys(System.getenv("performanceGlitchPassword"));
+                login.getLoginButton().click();
+                break;
+            }
+            case LOCKED_OUT_USER: {
+                login.getUsernameField().sendKeys(System.getenv("lockedOutUsername"));
+                login.getPasswordField().sendKeys(System.getenv("lockedOutPassword"));
+                login.getLoginButton().click();
+                break;
+            }
+            case WRONG_PASSWORD: {
+                login.getUsernameField().sendKeys(System.getenv("performanceGlitchUsername"));
+                login.getPasswordField().sendKeys("wrongPassword");
+                login.getLoginButton().click();
+                break;
+            }
+            case WRONG_USERNAME: {
+                login.getUsernameField().sendKeys("wrongUsername");
+                login.getPasswordField().sendKeys(System.getenv("lockedOutPassword"));
                 login.getLoginButton().click();
                 break;
             }
@@ -125,4 +153,25 @@ public class LoginSteps {
         Thread.sleep(2000);
         login.getHeader().getAppLogo().isPresent();
     }
+
+    @Step("Verify if user is logged")
+    public void checkUserLogged() {
+        AssertUtils.assertThat("User is not logged", mainPage.getHeader().getShoppingCart().isPresent());
+    }
+
+    @Step("Verify if error message for locked user appeared")
+    public void checkErrorLocked() {
+        AssertUtils.assertThat("Error did not appeared", login.getErrorContainer().isPresent());
+        AssertUtils.assertEquals("Error did not appeared", login.getErrorContainer().getText(), "Epic sadface: Sorry, this user has been locked out.");
+    }
+
+    @Step("Verify if error message for wrong username/password appeared")
+    public void checkWrongPassword() {
+        AssertUtils.assertEquals("Error did not appeared", login.getErrorContainer().getText(), "Epic sadface: Username and password do not match any user in this service");
+    }
+
+//    @Step("Verify if error message for wrong username appeared")
+//    public void checkWrongUsername() {
+//        AssertUtils.assertEquals("Error did not appeared", login.getErrorContainer().getText(), "Epic sadface: Username and password do not match any user in this service");
+//    }
 }
