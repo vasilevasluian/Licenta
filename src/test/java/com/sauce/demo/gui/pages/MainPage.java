@@ -13,9 +13,6 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class MainPage extends BasePage {
-//    private PageElement appLogo = PageElement.locate(LocatorType.CSS_SELECTOR, ".app_logo");
-//    private PageElement shoppingCart = PageElement.locate(LocatorType.CSS_SELECTOR, "#shopping_cart_container");
-//    private PageElement menuButton = PageElement.locate(LocatorType.CSS_SELECTOR, "#menu_button_container");
     private PageElement productSortButton = PageElement.locate(LocatorType.CSS_SELECTOR, "[data-test='product_sort_container']");
     private PageElement addToCartBackPack= PageElement.locate(LocatorType.CSS_SELECTOR, "[data-test='add-to-cart-sauce-labs-backpack']");
     private PageElement addToCartBikeLight= PageElement.locate(LocatorType.CSS_SELECTOR, "[data-test='add-to-cart-sauce-labs-bike-light']");
@@ -25,10 +22,5 @@ public class MainPage extends BasePage {
     private PageElement footerData= PageElement.locate(LocatorType.CSS_SELECTOR, ".footer_copy");
     private PageElement removeBackpackButton= PageElement.locate(LocatorType.CSS_SELECTOR, "[data-test='remove-sauce-labs-backpack']");
     private PageElement removeBikeLightButton= PageElement.locate(LocatorType.CSS_SELECTOR, "[data-test='remove-sauce-labs-bike-light']");
-//    private PageElement shoppingCartNumberItems= PageElement.locate(LocatorType.CSS_SELECTOR, ".shopping_cart_badge");
-
-
-
-
 
 }
