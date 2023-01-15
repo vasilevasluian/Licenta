@@ -74,32 +74,6 @@ public class LoginSteps {
         });
     }
 
-//    @Step("Verify if login page is integral")
-//    public void checkLoginPage() {
-//        SoftAssertions.assertSoftly(softly -> {
-//            softly.assertThat(loginPage.getLoginButton().isPresent())
-//                    .describedAs("Login Button is displayed")
-//                    .isTrue();
-//
-//            softly.assertThat(loginPage.getPasswordField().isPresent())
-//                    .describedAs("Password field is displayed")
-//                    .isTrue();
-//
-//            softly.assertThat(loginPage.getUsernameField().isPresent())
-//                    .describedAs("Username field is displayed")
-//                    .isTrue();
-//
-//            softly.assertThat(loginPage.getForgotPasswordButton().isPresent())
-//                    .describedAs("Forgot password field is displayed")
-//                    .isTrue();
-//
-//            softly.assertThat(loginPage.getSignUpButton().isPresent())
-//                    .describedAs("Sign Up button is displayed")
-//                    .isTrue();
-//        });
-//    }
-
-
     @Step("Login as <SIMPLE_USER>")
     public void loginToApp(Roles roles) {
         switch (roles) {
@@ -169,9 +143,4 @@ public class LoginSteps {
     public void checkWrongPassword() {
         AssertUtils.assertEquals("Error did not appeared", login.getErrorContainer().getText(), "Epic sadface: Username and password do not match any user in this service");
     }
-
-//    @Step("Verify if error message for wrong username appeared")
-//    public void checkWrongUsername() {
-//        AssertUtils.assertEquals("Error did not appeared", login.getErrorContainer().getText(), "Epic sadface: Username and password do not match any user in this service");
-//    }
 }
