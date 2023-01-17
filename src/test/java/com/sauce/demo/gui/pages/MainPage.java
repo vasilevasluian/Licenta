@@ -16,10 +16,6 @@ public class MainPage extends BasePage {
     private PageElement productSortButton = PageElement.locate(LocatorType.CSS_SELECTOR, "[data-test='product_sort_container']");
     private PageElement addToCartBackPack= PageElement.locate(LocatorType.CSS_SELECTOR, "[data-test='add-to-cart-sauce-labs-backpack']");
     private PageElement addToCartBikeLight= PageElement.locate(LocatorType.CSS_SELECTOR, "[data-test='add-to-cart-sauce-labs-bike-light']");
-    private PageElement twitterButton= PageElement.locate(LocatorType.CSS_SELECTOR, ".social_twitter");
-    private PageElement facebookButton= PageElement.locate(LocatorType.CSS_SELECTOR, ".social_facebook");
-    private PageElement linkedinButton= PageElement.locate(LocatorType.CSS_SELECTOR, ".social_linkedin");
-    private PageElement footerData= PageElement.locate(LocatorType.CSS_SELECTOR, ".footer_copy");
     private PageElement removeBackpackButton= PageElement.locate(LocatorType.CSS_SELECTOR, "[data-test='remove-sauce-labs-backpack']");
     private PageElement removeBikeLightButton= PageElement.locate(LocatorType.CSS_SELECTOR, "[data-test='remove-sauce-labs-bike-light']");
 

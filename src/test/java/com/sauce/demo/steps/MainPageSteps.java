@@ -25,6 +25,8 @@ public class MainPageSteps {
                     .describedAs("Product sort Button is displayed")
                     .isTrue();
         });
+        mainPage.validateFooter();
+        mainPage.validateHeader();
     }
 
     @Step("Add back pack to cart")
